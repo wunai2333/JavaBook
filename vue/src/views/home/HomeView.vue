@@ -73,7 +73,8 @@ const option = {
       return {
         admin: Cookies.get('admin') ? JSON.parse(Cookies.get('admin')) : {},
         lineBox: null,
-        option: [
+        timeRange: 'week',
+        options: [
           {label: '最近一周', value: 'week'},
           {label: '最近一个月', value: 'month'},
           {label: '最近两个月', value: 'month2'},
@@ -83,6 +84,7 @@ const option = {
     },
     mounted() {
       this.load()
+
     },
     methods: {
      load() {
@@ -90,10 +92,15 @@ const option = {
          this.lineBox = echarts.init(document.getElementById('line'))
        }
        request.get('/borrow/lineCharts/' + this.timeRange).then(res => {
-         option.xAxis.data = res.data.data
-         option.series[0].data = res.data.borrow
-         option.series[1].data = res.data.retur
-         this.lineBox.setOption(option)
+         if (res.data) {
+           option.xAxis.data = res.data.data
+           option.series[0].data = res.data.borrow
+           option.series[1].data = res.data.retur
+           this.lineBox.setOption(option)
+         } else {
+           console.error('Received null data from the server.');
+         }
+
        })
      }
    },

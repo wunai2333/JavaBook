@@ -1,13 +1,12 @@
 package com.example.springboot.exception;
 
+import lombok.Getter;
+
+@Getter
 public class ServiceException extends RuntimeException{
 
     private String code;
 
-
-    public String getCode() {
-        return code;
-    }
 
     public ServiceException(String message, Throwable cause) {
         super(message, cause);

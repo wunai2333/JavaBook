@@ -14,9 +14,11 @@ request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
 
-    const  admin = Cookies.get(`user`)
+    const  admin = Cookies.get(`admin`)
     if (admin) {
         config.headers['token'] = JSON.parse(admin).token
+    } else {
+        console.log()
     }
     // 设置请求头    config.headers['token'] = JSON.parse(adminJSON).token
 
